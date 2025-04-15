@@ -8,84 +8,110 @@ public class CarCalculator {
 
     Scanner scanner = new Scanner(System.in);
 
-    static class Option{
-        String optName;
-        double cost;
-
-        Option(String _optName, double _cost){
-            this.optName = _optName;
-            this.cost = _cost;
-        }
-    }
     public void rent() {
+        Map<String, Double> optionsCost = new LinkedHashMap<>();
+        optionsCost.put("electronic toll tag", 3.95);
+        optionsCost.put("GPS", 2.95);
+        optionsCost.put("roadside assistance", 3.95);
+        double totalCost = 0, rentUnder25;
         String date;
-        double daysRent, basicRent = 29.99, rentUnder25;
         int age;
+        double daysRent, basicRent = 29.99;
 
         System.out.printf("Enter a pick-up date (yyyy-MM-dd): ");
         date = scanner.nextLine();
         System.out.printf("Enter how many days you want to rent a car: ");
         daysRent = scanner.nextDouble();
-
-        Map<Double, Option> newOption = new LinkedHashMap<>();
-        newOption.put(1.0, new Option("electronic toll tag", 3.95));
-        newOption.put(2.0, new Option("GPS", 2.95));
-        newOption.put(3.0, new Option("roadside assistance", 3.95));
-        double totalCost = 0;
-
-        for(Map.Entry<Double, Option> entry : newOption.entrySet()){
-            Option option = entry.getValue();
-            System.out.printf("Do you want " + option.optName + " for $" + option.cost + " per day? [Y/N]:");
+        for (Map.Entry<String, Double> entry : optionsCost.entrySet()) {
+            System.out.printf("Do you want " + entry.getKey() + " for " + entry.getValue() + " per day [Y/N] ?: ");
             String input = scanner.next().trim().toLowerCase();
-
-            if (input.equals("y")){
-                totalCost += option.cost;
+            if (input.equals("y")) {
+                totalCost += entry.getValue();
             }
         }
-        System.out.println("Total option cost: +$" + totalCost);
-        System.out.printf("Enter your age: ");
+        System.out.printf("Total optional cost: +$%.2f\n", totalCost);
+        System.out.printf("\nEnter your age: ");
         age = scanner.nextInt();
-        if( age < 25 ){
-            System.out.println("Basic Car Rental Cost: $" + basicRent + " per day * " + daysRent + " day/s rent");
-            System.out.println("Driver under 25 surcharge: %30");
-            rentUnder25 =basicRent + (basicRent * .30);
+        if (age < 25) {
+            System.out.println("Driver under 25 years old surcharge ➡️➡️ %30");
+            System.out.println("Basic Car Rental Cost: $" + basicRent);
+            rentUnder25 = basicRent + (basicRent * .30);
+            System.out.printf("Total after Surcharge: ➡️ $%.2f", rentUnder25);
+            System.out.printf("\nTotal after optional cost: ➡️➡️ $%.2f", totalCost + rentUnder25);
+            System.out.println("\nDays to be rented: " + daysRent);
             totalCost = (rentUnder25 + totalCost) * daysRent;
 
-            System.out.printf("Total cost: $%.2f" , totalCost);
-        }else{
-            System.out.println("Basic Car Rental Cost: $" + basicRent + " per day * " + daysRent + " day/s rent");
+            System.out.printf("\nTotal cost: $%.2f", totalCost);
+        } else {
             System.out.println("Age is 25 or over: No surcharge ...");
+            System.out.println("Basic Car Rental Cost: $" + basicRent);
+            System.out.printf("Total after optional cost: ➡️ $%.2f", basicRent + totalCost);
+            System.out.println("\nDays to be rented: " + daysRent);
+
             totalCost = (totalCost + basicRent) * daysRent;
-            System.out.printf("\nTotal cost: $%.2f" , totalCost);
+            System.out.printf("\nTotal cost: $%.2f", totalCost);
         }
     }
 
-//        Map<String, Double> optionsCost = new LinkedHashMap<>();
-//        optionsCost.put("electronic toll tag", 3.95);
-//        optionsCost.put("GPS", 2.95);
-//        optionsCost.put("roadside assistance", 3.95);
-//        int totalCost = 0, age;
-//        String date;
-//        double daysRent, basicRent = 29.99;
 
+//    static class Option{
+//        String optName;
+//        double cost;
+//
+//        Option(String _optName, double _cost){
+//            this.optName = _optName;
+//            this.cost = _cost;
+//        }
+//    }
+//    public void rent() {
+//        String date;
+//        double daysRent, basicRent = 29.99, rentUnder25;
+//        int age;
+//
 //        System.out.printf("Enter a pick-up date (yyyy-MM-dd): ");
 //        date = scanner.nextLine();
 //        System.out.printf("Enter how many days you want to rent a car: ");
 //        daysRent = scanner.nextDouble();
-//        for(Map.Entry<String, Double> entry : optionsCost.entrySet()){
-//            System.out.printf("Do you want " + entry.getKey() + " at " + entry.getKey() + "[Y/N] ?: ");
-//            String input = scanner.nextLine().trim().toLowerCase();
+//
+//        Map<Double, Option> newOption = new LinkedHashMap<>();
+//        newOption.put(1.0, new Option("electronic toll tag", 3.95));
+//        newOption.put(2.0, new Option("GPS", 2.95));
+//        newOption.put(3.0, new Option("roadside assistance", 3.95));
+//        double totalCost = 0;
+//
+//        for(Map.Entry<Double, Option> entry : newOption.entrySet()){
+//            Option option = entry.getValue();
+//            System.out.printf("Do you want " + option.optName + " for $" + option.cost + " per day? [Y/N]:");
+//            String input = scanner.next().trim().toLowerCase();
+//
 //            if (input.equals("y")){
-//                totalCost += entry.getValue();
+//                totalCost += option.cost;
 //            }
 //        }
-//        System.out.printf("Enter your age: ");
+//        System.out.printf("Total optional cost: +$%.2f\n" ,totalCost);
+//        System.out.printf("\nEnter your age: ");
 //        age = scanner.nextInt();
+//        if( age < 25 ){
+//            System.out.println("Driver under 25 years old surcharge ➡️➡️ %30");
+//            System.out.println("Basic Car Rental Cost: $" + basicRent);
+//            rentUnder25 =basicRent + (basicRent * .30);
+//            System.out.printf("Total after Surcharge: ➡️ $%.2f", rentUnder25);
+//            System.out.printf("\nTotal after optional cost: ➡️➡️ $%.2f" ,totalCost + rentUnder25);
+//            System.out.println("\nDays to be rented: " + daysRent);
+//            totalCost = (rentUnder25 + totalCost) * daysRent;
+//
+//            System.out.printf("\nTotal cost: $%.2f" , totalCost);
+//        }else{
+//            System.out.println("Age is 25 or over: No surcharge ...");
+//            System.out.println("Basic Car Rental Cost: $" + basicRent);
+//            System.out.printf("Total after optional cost: $%.2f" , basicRent +totalCost);
+//            System.out.println("\nDays to be rented: " + daysRent);
+//
+//            totalCost = (totalCost + basicRent) * daysRent;
+//            System.out.printf("\nTotal cost: $%.2f" , totalCost);
+//        }
+//    }
 
-
-//        System.out.println("Total cost: $" + totalCost);
-
-    //}
 
 
 //    double daysRent, tollPrice = 3.95, gpsPrice = 2.95, assistPrice = 3.95, basicRental = 29.99, totalCost;
